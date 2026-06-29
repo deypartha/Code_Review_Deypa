@@ -5,10 +5,12 @@ on:
     branches:
       - master
 
+  pull_request:
+    branches:
+      - master
+
 jobs:
-
   backend:
-
     runs-on: ubuntu-latest
 
     defaults:
@@ -16,19 +18,20 @@ jobs:
         working-directory: Backend
 
     steps:
-
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - run: npm install
+      - name: Install Backend Dependencies
+        run: npm install
 
-      - run: npm test
-      
-    frontend:
+      # Uncomment this if you have tests
+      # - name: Run Backend Tests
+      #   run: npm test
 
+  frontend:
     runs-on: ubuntu-latest
 
     defaults:
@@ -36,13 +39,14 @@ jobs:
         working-directory: Frontend
 
     steps:
-
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - run: npm install
+      - name: Install Frontend Dependencies
+        run: npm install
 
-      - run: npm run build
+      - name: Build Frontend
+        run: npm run build
